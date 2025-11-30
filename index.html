@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Bot - البوت الإداري الأكثر أناقة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* خلفية متحركة */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1438 50%, #0f1b3a 100%);
+            animation: bgShift 20s ease infinite;
+        }
+
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(88, 101, 242, 0.5);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        /* Navbar */
+        nav {
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 1.2rem 8%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(88, 101, 242, 0.2);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #5865F2, #7289DA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #5865F2, #7289DA);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.4);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            padding: 0.7rem 1.3rem;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        nav a:hover {
+            color: #5865F2;
+            background: rgba(88, 101, 242, 0.1);
+        }
+
+        /* زر إضافة البوت في Navbar */
+        .nav-add-btn {
+            background: linear-gradient(135deg, #5865F2, #7289DA);
+            color: #fff !important;
+            padding: 0.8rem 1.8rem !important;
+            border-radius: 12px;
+            font-weight: 700;
+            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.4);
+            transition: all 0.3s;
+        }
+
+        .nav-add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(88, 101, 242, 0.6);
+            background: linear-gradient(135deg, #7289DA, #5865F2);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem 5%;
+            position: relative;
+            padding-top: 100px;
+        }
+
+        .hero-badge {
+            background: rgba(88, 101, 242, 0.15);
+            border: 1px solid rgba(88, 101, 242, 0.3);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            display: inline-block;
+            color: #7289DA;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, #7289DA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #5865F2, #7289DA);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.5);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(88, 101, 242, 0.7);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 2px solid rgba(88, 101, 242, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(88, 101, 242, 0.1);
+            border-color: #5865F2;
+        }
+
+        /* Stats */
+        .stats {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4rem 8%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2.5rem;
+            border-top: 1px solid rgba(88, 101, 242, 0.2);
+            border-bottom: 1px solid rgba(88, 101, 242, 0.2);
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2.5rem;
+            background: rgba(88, 101, 242, 0.05);
+            border: 1px solid rgba(88, 101, 242, 0.2);
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            background: rgba(88, 101, 242, 0.1);
+            border-color: rgba(88, 101, 242, 0.4);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #5865F2, #7289DA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            margin-top: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+        }
+
+        /* Features */
+        .features {
+            padding: 6rem 8%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, #7289DA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: rgba(88, 101, 242, 0.05);
+            border: 1px solid rgba(88, 101, 242, 0.2);
+            padding: 3rem;
+            border-radius: 25px;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), transparent);
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            border-color: rgba(88, 101, 242, 0.5);
+            box-shadow: 0 20px 50px rgba(88, 101, 242, 0.3);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Commands */
+        .commands {
+            padding: 6rem 8%;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .command-card {
+            background: rgba(88, 101, 242, 0.05);
+            border: 1px solid rgba(88, 101, 242, 0.2);
+            padding: 2rem;
+            border-radius: 20px;
+            border-right: 4px solid #5865F2;
+            transition: 0.3s;
+        }
+
+        .command-card:hover {
+            background: rgba(88, 101, 242, 0.1);
+            transform: translateX(-10px);
+        }
+
+        .command-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #7289DA;
+            margin-bottom: 0.8rem;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .command-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.05rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 4rem 8%;
+            text-align: center;
+            border-top: 1px solid rgba(88, 101, 242, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #5865F2, #7289DA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        .footer-links a:hover {
+            color: #5865F2;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(88, 101, 242, 0.1);
+            border: 1px solid rgba(88, 101, 242, 0.3);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            font-size: 1.4rem;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background: linear-gradient(135deg, #5865F2, #7289DA);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(88, 101, 242, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .stats {
+                padding: 3rem 5%;
+            }
+
+            .features, .commands {
+                padding: 4rem 5%;
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            right: 50%;
+            transform: translateX(50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(50%) translateY(0); }
+            50% { transform: translateX(50%) translateY(15px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- خلفية متحركة -->
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">🤖</div>
+            Admin Bot
+        </div>
+        <ul>
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#features">المميزات</a></li>
+            <li><a href="#commands">الأوامر</a></li>
+            <li><a href="https://discord.com/oauth2/authorize?client_id=1407027761008083015" class="nav-add-btn" target="_blank">➕ أضف البوت</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">✨ البوت الإداري الأقوى في 2024</div>
+            <h1>تحكم باحترافية<br>في سيرفرك</h1>
+            <p>أقوى بوت إداري عربي لـ Discord مع أكثر من 15 أمر قوي، تصميم أنيق، وأداء فائق السرعة</p>
+            <div class="cta-buttons">
+                <a href="https://discord.com/oauth2/authorize?client_id=1407027761008083015" class="btn btn-primary" target="_blank">
+                    ➕ أضف البوت الآن
+                </a>
+                <a href="#features" class="btn btn-secondary">
+                    📚 استكشف المميزات
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div style="font-size: 2rem;">⬇️</div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="stat-card">
+            <div class="stat-number">10K+</div>
+            <div class="stat-label">سيرفر نشط</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">500K+</div>
+            <div class="stat-label">مستخدم</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">99.9%</div>
+            <div class="stat-label">وقت التشغيل</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">15+</div>
+            <div class="stat-label">أمر إداري</div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <h2 class="section-title">لماذا Admin Bot؟</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>أداء خارق</h3>
+                <p>استجابة فورية لجميع الأوامر مع بنية تحتية محسّنة وموثوقة 24/7</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>أمان متقدم</h3>
+                <p>نظام صلاحيات دقيق يحمي سيرفرك من أي استخدام خاطئ أو غير مصرح</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>عربي 100%</h3>
+                <p>واجهة عربية كاملة مع دعم كامل للغة العربية في جميع الأوامر</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>تقارير شاملة</h3>
+                <p>احصل على معلومات تفصيلية عن سيرفرك وأعضائك بضغطة زر</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>تصميم أنيق</h3>
+                <p>رسائل Embed احترافية بألوان جذابة وتصميم عصري</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>سهل الاستخدام</h3>
+                <p>أوامر Slash بسيطة لا تحتاج أي خبرة تقنية</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commands -->
+    <section class="commands" id="commands">
+        <h2 class="section-title">الأوامر المتوفرة</h2>
+        <div class="commands-grid">
+            <div class="command-card">
+                <div class="command-name">⚔️ /kick</div>
+                <p>طرد عضو من السيرفر مع إمكانية إضافة سبب</p>
+            </div>
+            <div class="command-card">
+                <div class="command-name">🔨 /ban</div>
+                <p>حظر عضو نهائياً من السيرفر</p>
+            </div>
+            <div class="command-card">
+                <div class="command-name">✅ /unban</div>
+                <p>إلغاء حظر عضو محظور مسبقاً</p>
+            </div>
+            <div class="command-card">
+                <div class="command-name">🔇 /timeout</div>
+                <p>كتم عضو مؤقتاً لفترة محددة</p>
+            </div>
+            <div class="command-card">
+                <div class="command-name">🔊 /untimeout</div>
+                <p>إلغاء كتم عضو مكتوم</p>
+            </div>
+            <div class="command-card">
+                <div class="command-name">⚠️ /warn</div>
+                <p>إرسال تحذير لعضو مع ذكر السبب</p>
+            </div>
+            <div class="command-card">
+                <div class="command-name">🗑️ /clear</div>
+                <p>حذف عدد من الرسائل (حتى 100)</p>
+            </div>
+            <div class="command-card">
+                <div class="command-name">🔒 /lock</div>
+                <p>قفل القناة ومنع الأعضاء من الكتابة</p>
+            </div>
+            <div class="command-card">
+                <div class="command-name">🔓 /unlock</div>
+                <p>فتح القناة والسماح بالكتابة</p>
+            </div>
+            <div class="command-card">
+                <div class="command-name">⏱️ /slowmode</div>
+                <p>تفعيل الوضع البطيء في القناة</p>
+            </div>
+            <div class="command-card">
+                <div class="command-name">📊 /serverinfo</div>
+                <p>عرض معلومات شاملة عن السيرفر</p>
+            </div>
+            <div class="command-card">
+                <div class="command-name">👤 /userinfo</div>
+                <p>عرض معلومات تفصيلية عن أي عضو</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">🤖 Admin Bot</div>
+            <p style="color: rgba(255,255,255,0.7); margin-bottom: 2rem;">البوت الإداري الأكثر أناقة لـ Discord</p>
+            
+            <div class="social-links">
+                <a href="https://discord.com/oauth2/authorize?client_id=1407027761008083015" class="social-icon" target="_blank">💬</a>
+                <a href="https://github.com/errornfzphgzqiauihvskqihv/bot" class="social-icon" target="_blank">💻</a>
+                <a href="#" class="social-icon">🌐</a>
+                <a href="#" class="social-icon">📱</a>
+            </div>
+
+            <div class="footer-links">
+                <a href="#">الشروط والأحكام</a>
+                <a href="#">سياسة الخصوصية</a>
+                <a href="#">الدعم</a>
+                <a href="#">التوثيق</a>
+            </div>
+
+            <p style="margin-top: 2.5rem; color: rgba(255,255,255,0.5); font-size: 0.95rem;">
+                Developer: <strong style="color: #7289DA;">X_ERROR_X</strong> | © 2024 Admin Bot. جميع الحقوق محفوظة
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // إنشاء جزيئات متحركة
+        const particlesContainer = document.getElementById('particles');
+        for(let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-card, .feature-card, .command-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
